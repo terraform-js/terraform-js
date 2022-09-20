@@ -1,0 +1,32 @@
+{
+  "name": "tf-js",
+  "version": "0.0.1",
+  "description": "A lightweight Javascript wrapper library for Terraform Cli written in Typescript ",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pnjha/tf-js.git"
+  },
+  "keywords": [
+    "Terraform",
+    "Typescript"
+  ],
+  "author": "prakashecdrid@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pnjha/tf-js/issues"
+  },
+  "homepage": "https://github.com/pnjha/tf-js#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.185",
+    "@types/node": "^18.7.18",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "execa": "^6.1.0",
+    "lodash": "^4.17.21"
+  }
+}
