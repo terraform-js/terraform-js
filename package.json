@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A lightweight Javascript wrapper library for Terraform Cli written in Typescript ",
   "main": "build/index.js",
+  "type": "module",
   "scripts": {
     "build": "tsc"
   },
@@ -29,6 +30,7 @@
     "execa": "^6.1.0",
     "lodash": "^4.17.21"
   },
+  "types": "build/index.d.ts",
   "files": [
     "build/**/*"
   ]
