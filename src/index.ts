@@ -1,81 +1,113 @@
-import _, { List } from "lodash";
-import execa from "execa";
+import _ from 'lodash';
+import execa from 'execa';
 
 export type TerraformConfig = {
   logLevel?: string;
   workspace: string;
   templateDirectory?: string;
+  pluginDirectory?: string | null;
+  workingDirectory: string;
 };
 
-export type StdioHandler = "inherit" | "pipe";
+export type TerraformOutput = {
+  stdout: string;
+};
+
+export type StdioHandler = 'inherit' | 'pipe';
 
 const defaultConfig: TerraformConfig = {
-  logLevel: "INFO",
-  workspace: "default",
-  templateDirectory: "default"
+  logLevel: 'INFO',
+  workspace: 'default',
+  pluginDirectory: null,
+  templateDirectory: '.',
+  workingDirectory: '.'
 };
 
 export class Terraformer {
   private readonly logLevel?: string;
   private readonly workspace: string;
+  private readonly workingDirectory: string;
   private readonly templateDirectory?: string;
+  private readonly pluginDirectory?: string | null;
   constructor(options: TerraformConfig) {
     this.logLevel = options.logLevel || defaultConfig.logLevel;
     this.workspace = options.workspace || defaultConfig.workspace;
-    this.templateDirectory =
-      options.templateDirectory || defaultConfig.templateDirectory;
+    this.workingDirectory = options.workingDirectory || defaultConfig.workingDirectory;
+    this.templateDirectory = options.templateDirectory || defaultConfig.templateDirectory;
+    this.pluginDirectory = options.pluginDirectory || defaultConfig.pluginDirectory;
   }
-  private async setWorkspace() {
-    if (this.workspace !== this.templateDirectory) {
-      // process.chdir(this.workspace);
-      const command = `cp -a ${this.templateDirectory}/. ${this.workspace}`;
-      await execa.execaCommand(command, {
-        stdio: "inherit"
-      });
-    }
-  }
-  private async initialize() {}
-  async setup() {
+  private async setup(): Promise<void> {
     await this.setWorkspace();
     await this.initialize();
   }
-  async apply() {
-    const options = ["apply", "-auto-approve"];
-    await this.execute(options, "inherit");
+  private async createWorkspace(): Promise<void> {
+    if (this.workspace !== defaultConfig.workspace) {
+      await this.run(['workspace new', this.workspace], 'inherit');
+    }
   }
-  async destroy() {
-    const options = ["destroy", "-auto-approve"];
-    await this.execute(options, "inherit");
+  private async setWorkspace(): Promise<void> {
+    process.chdir(this.workingDirectory);
+    await this.createWorkspace();
+    if (this.workingDirectory !== this.templateDirectory) {
+      const command = `cp -a ${this.templateDirectory}/. ${this.workingDirectory}`;
+      await execa.execaCommand(command, {
+        stdio: 'inherit'
+      });
+    }
   }
-  async output() {
-    const options = ["output", "-json"];
-    return (await this.execute(options, "pipe")).stdout;
+  private async initialize(): Promise<void> {
+    const options = ['init'];
+    if (!_.isEmpty(this.pluginDirectory)) {
+      options.push(`-plugin-dir=${this.pluginDirectory}`);
+    }
+    await this.run(options, 'inherit');
   }
-  async getState() {
-    const options = ["show", "-json"];
-    const state = await this.execute(options, "pipe");
+  async apply(): Promise<void> {
+    const options = ['apply', '-auto-approve'];
+    await this.run(options, 'inherit');
+  }
+  async destroy(): Promise<void> {
+    const options = ['destroy', '-auto-approve'];
+    await this.run(options, 'inherit');
+  }
+  async import(resourceName: string, resourceId: string): Promise<void> {
+    const options = ['import', resourceName, resourceId];
+    await this.run(options, 'inherit');
+  }
+  async output(): Promise<void> {
+    const options = ['output', '-json'];
+    const output = await this.run(options, 'pipe');
+    return JSON.parse(output.stdout);
+  }
+  async getState(): Promise<void> {
+    const options = ['show', '-json'];
+    const state = await this.run(options, 'pipe');
     return JSON.parse(state.stdout);
   }
-  private async execute(parameters: Array<string>, stdioHandler: StdioHandler) {
-    const commandOpts = parameters.join(" ");
-    const logLevel = _.defaultTo(process.env.TF_LOG, this.logLevel);
+  async removeState(resourceName: string) {
+    const options = ['state rm', resourceName];
+    await this.run(options, 'inherit');
+  }
+  private async run(parameters: Array<string>, stdioHandler: StdioHandler): Promise<TerraformOutput> {
+    await this.setup();
+    const commandOpts = parameters.join(' ');
     const command = `terraform ${commandOpts}`;
     try {
       return await execa.execaCommand(command, {
         stdio: stdioHandler,
         shell: true,
         env: {
-          TF_INPUT: "false",
-          TF_LOG: logLevel,
-          TF_IN_AUTOMATION: "true",
-          TF_CLI_ARGS_import: "-no-color",
-          TF_CLI_ARGS_apply: "-no-color",
-          TF_CLI_ARGS_init: "-no-color",
-          TF_CLI_ARGS_destroy: "-no-color"
+          TF_INPUT: 'false',
+          TF_LOG: _.defaultTo(process.env.TF_LOG, this.logLevel),
+          TF_IN_AUTOMATION: 'true',
+          TF_CLI_ARGS_import: '-no-color',
+          TF_CLI_ARGS_apply: '-no-color',
+          TF_CLI_ARGS_init: '-no-color',
+          TF_CLI_ARGS_destroy: '-no-color'
         }
       });
     } catch (err) {
-      console.log(`Failed to execute command: ${command} with error: `, err);
+      console.log(`Failed to run command: ${command} with error: `, err);
       throw err;
     }
   }
