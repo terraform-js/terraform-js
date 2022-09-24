@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "A lightweight Javascript wrapper library for Terraform Cli written in Typescript ",
   "main": "build/index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "build": "tsc"
   },
