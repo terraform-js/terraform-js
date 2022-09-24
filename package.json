@@ -1,5 +1,5 @@
 {
-  "name": "tf-js",
+  "name": "terraform-js",
   "version": "0.0.1",
   "description": "A lightweight Javascript wrapper library for Terraform Cli written in Typescript ",
   "main": "build/index.js",
@@ -28,5 +28,8 @@
   "dependencies": {
     "execa": "^6.1.0",
     "lodash": "^4.17.21"
-  }
+  },
+  "files": [
+    "build/**/*"
+  ]
 }
