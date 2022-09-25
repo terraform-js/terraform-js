@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import execa from 'execa';
+import {execaCommand} from 'execa';
 
 export type TerraformConfig = {
   logLevel?: string;
@@ -50,7 +50,7 @@ export class Terraformer {
     await this.createWorkspace();
     if (this.workingDirectory !== this.templateDirectory) {
       const command = `cp -a ${this.templateDirectory}/. ${this.workingDirectory}`;
-      await execa.execaCommand(command, {
+      await execaCommand(command, {
         stdio: 'inherit'
       });
     }
@@ -93,7 +93,7 @@ export class Terraformer {
     const commandOpts = parameters.join(' ');
     const command = `terraform ${commandOpts}`;
     try {
-      return await execa.execaCommand(command, {
+      return await execaCommand(command, {
         stdio: stdioHandler,
         shell: true,
         env: {
