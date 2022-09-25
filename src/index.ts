@@ -36,15 +36,24 @@ export class Terraformer {
     this.templateDirectory = options.templateDirectory || defaultConfig.templateDirectory;
     this.pluginDirectory = options.pluginDirectory || defaultConfig.pluginDirectory;
   }
+  /**
+   * Sets up workspace and perform terraform init
+   */
   private async setup(): Promise<void> {
     await this.setWorkspace();
     await this.initialize();
   }
+  /**
+   * Creates a new workspace if provided
+   */
   private async createWorkspace(): Promise<void> {
     if (this.workspace !== defaultConfig.workspace) {
       await this.run(['workspace new', this.workspace], 'inherit');
     }
   }
+  /**
+   * Copies all the templates to the current workspace
+   */
   private async setWorkspace(): Promise<void> {
     process.chdir(this.workingDirectory);
     await this.createWorkspace();
@@ -55,6 +64,9 @@ export class Terraformer {
       });
     }
   }
+  /**
+   * Performs terraform init with a target plugin directory if provided
+   */
   private async initialize(): Promise<void> {
     const options = ['init'];
     if (!_.isEmpty(this.pluginDirectory)) {
@@ -62,32 +74,61 @@ export class Terraformer {
     }
     await this.run(options, 'inherit');
   }
+  /**
+   * Performs terraform apply with auto approve
+   */
   async apply(): Promise<void> {
     const options = ['apply', '-auto-approve'];
     await this.run(options, 'inherit');
   }
+  /**
+   * Performs terraform destroy with auto approve
+   */
   async destroy(): Promise<void> {
     const options = ['destroy', '-auto-approve'];
     await this.run(options, 'inherit');
   }
+  /**
+   * Performs terraform import
+   * @param resourceName Terraform resource name as present in the template
+   * @param resourceId Remote resource id
+   */
   async import(resourceName: string, resourceId: string): Promise<void> {
     const options = ['import', resourceName, resourceId];
     await this.run(options, 'inherit');
   }
+  /**
+   * Perform terraform output
+   * @returns JSON object of terraform output
+   */
   async output(): Promise<void> {
     const options = ['output', '-json'];
     const output = await this.run(options, 'pipe');
     return JSON.parse(output.stdout);
   }
+  /**
+   * Performs terrafrom state -json
+   * @returns terraform state file as JSON object
+   */
   async getState(): Promise<void> {
     const options = ['show', '-json'];
     const state = await this.run(options, 'pipe');
     return JSON.parse(state.stdout);
   }
+  /**
+   * Performs terraform rm <resource>
+   * @param resourceName Terraform resource name as mentioned in the template
+   */
   async removeState(resourceName: string) {
     const options = ['state rm', resourceName];
     await this.run(options, 'inherit');
   }
+  /**
+   * Run the terraform cli commands via execa
+   * @param parameters terraform parameters
+   * @param stdioHandler output handler
+   * @returns output of cli command
+   */
   private async run(parameters: Array<string>, stdioHandler: StdioHandler): Promise<TerraformOutput> {
     await this.setup();
     const commandOpts = parameters.join(' ');
