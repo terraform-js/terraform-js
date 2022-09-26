@@ -92,6 +92,14 @@ export class Terraformer {
     await this.run(options, 'inherit');
   }
   /**
+   * Destroys a specific resource present in the terraform state file
+   * @param resourceName Terraform resource name as mentioned in template
+   */
+  async destroyResource(resourceName: string): Promise<void> {
+    const options = ['destroy', '-auto-approve', `-target=${resourceName}`];
+    await this.run(options, 'inherit');
+  }
+  /**
    * Performs terraform import
    * @param resourceName Terraform resource name as present in the template
    * @param resourceId Remote resource id
@@ -136,23 +144,18 @@ export class Terraformer {
     await this.setup();
     const commandOpts = parameters.join(' ');
     const command = `terraform ${commandOpts}`;
-    try {
-      return await execaCommand(command, {
-        stdio: stdioHandler,
-        shell: true,
-        env: {
-          TF_INPUT: 'false',
-          TF_LOG: _.defaultTo(process.env.TF_LOG, this.logLevel),
-          TF_IN_AUTOMATION: 'true',
-          TF_CLI_ARGS_import: '-no-color',
-          TF_CLI_ARGS_apply: '-no-color',
-          TF_CLI_ARGS_init: '-no-color',
-          TF_CLI_ARGS_destroy: '-no-color'
-        }
-      });
-    } catch (err) {
-      console.log(`Failed to run command: ${command} with error: `, err);
-      throw err;
-    }
+    return await execaCommand(command, {
+      stdio: stdioHandler,
+      shell: true,
+      env: {
+        TF_INPUT: 'false',
+        TF_LOG: _.defaultTo(process.env.TF_LOG, this.logLevel),
+        TF_IN_AUTOMATION: 'true',
+        TF_CLI_ARGS_import: '-no-color',
+        TF_CLI_ARGS_apply: '-no-color',
+        TF_CLI_ARGS_init: '-no-color',
+        TF_CLI_ARGS_destroy: '-no-color'
+      }
+    });
   }
 }

@@ -1,0 +1,70 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "brace-style": ["error", "1tbs", { "allowSingleLine": false }],
+    "comma-dangle": "off",
+    "func-names": ["warn", "as-needed"],
+    "camelcase": ["off", { "properties": "never" }],
+    "lines-between-class-members": ["error", "never"],
+    "no-constant-condition": ["warn", { "checkLoops": false }],
+    "complexity": ["off", 17],
+    "consistent-return": "off",
+    "default-case": "off",
+    "global-require": "off",
+    "no-await-in-loop": "off",
+    "no-continue": "off",
+    "no-else-return": "off",
+    "no-lonely-if": "off",
+    "no-new": "off",
+    "no-param-reassign": "off",
+    "object-shorthand": "off",
+    "prefer-rest-params": "off",
+    "prefer-spread": "off",
+    "prefer-template": "off",
+    "no-underscore-dangle": "off",
+    "no-plusplus": "off",
+    "import/no-dynamic-require": "off",
+    "max-classes-per-file": ["off", 1],
+    "prefer-destructuring": "off",
+    "class-methods-use-this": "off",
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-eq-null": "error",
+    "no-extra-parens": [
+      "off",
+      "all",
+      {
+        "nestedBinaryExpressions": false
+      }
+    ],
+    "no-restricted-syntax": "off",
+    "no-shadow": "error",
+    "no-empty": ["error", { "allowEmptyCatch": true }],
+    "no-unused-vars": [
+      "error",
+      {
+        "args": "none"
+      }
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "spaced-comment": ["error", "always"],
+    "strict": ["error", "global"],
+    "yoda": ["error", "never", { "exceptRange": true }],
+    "no-template-curly-in-string": "warn"
+  }
+}
