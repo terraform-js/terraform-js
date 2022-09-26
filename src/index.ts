@@ -72,7 +72,10 @@ export class Terraformer {
     if (!_.isEmpty(this.pluginDirectory)) {
       options.push(`-plugin-dir=${this.pluginDirectory}`);
     }
-    await this.run(options, 'inherit');
+    const command = `terraform ${options.join(' ')}`;
+    await execaCommand(command, {
+      stdio: 'inherit'
+    });
   }
   /**
    * Performs terraform apply with auto approve

@@ -22,9 +22,11 @@ const config = {
   workingDirectory: '.'     // directory where tf state file will be generated
 }
 
-const tf = new Terraformer({});
+const tf = new Terraformer(config);
 
-await tf.apply();
+tf.apply().then().catch((err)=>{
+  console.log(err);
+});
 
 ```
 
