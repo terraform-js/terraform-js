@@ -3,7 +3,7 @@ A lightweight Javascript wrapper library for Terraform Cli written in Typescript
 
 Example:
 
-```
+```js
 import { Terraformer } from "@pnjha/terraform-js";
 
 const config = {
