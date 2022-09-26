@@ -107,7 +107,7 @@ export class Terraformer {
     return JSON.parse(output.stdout);
   }
   /**
-   * Performs terrafrom state -json
+   * Performs terrafrom show -json
    * @returns terraform state file as JSON object
    */
   async getState(): Promise<void> {
