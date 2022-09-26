@@ -1,6 +1,14 @@
 # terraform-js
 A lightweight Javascript wrapper library for Terraform Cli written in Typescript
 
+NPM package link: https://www.npmjs.com/package/@pnjha/terraform-js
+
+Install the package:
+
+```
+npm i @pnjha/terraform-js
+```
+
 Example:
 
 ```js
@@ -19,4 +27,5 @@ const tf = new Terraformer({});
 await tf.apply();
 
 ```
+
 All contributions to this repo are welcomed in form of issues and PRs
