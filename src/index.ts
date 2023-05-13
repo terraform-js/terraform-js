@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {execaCommand} from 'execa';
+import { execaCommand } from 'execa';
 
 export type TerraformConfig = {
   logLevel?: string;
@@ -78,10 +78,31 @@ export class Terraformer {
     });
   }
   /**
+   * Performs terraform plan with auto approve
+   */
+  async plan(): Promise<void> {
+    const options = ['plan'];
+    await this.run(options, 'inherit');
+  }
+  /**
    * Performs terraform apply with auto approve
    */
   async apply(): Promise<void> {
     const options = ['apply', '-auto-approve'];
+    await this.run(options, 'inherit');
+  }
+  /**
+   * Performs terraform show with auto approve
+   */
+  async show(): Promise<void> {
+    const options = ['show'];
+    await this.run(options, 'inherit');
+  }
+  /**
+   * Performs terraform validate with auto approve
+   */
+  async validate(): Promise<void> {
+    const options = ['validate'];
     await this.run(options, 'inherit');
   }
   /**
