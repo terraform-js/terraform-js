@@ -27,10 +27,7 @@ jobs:
       - name: commit version
         run: |
           git show
-          git push
-          with:
-            repo-token: ${{ secrets.GITHUB_TOKEN }}
+          git push "https://${{ secrets.GITHUB_TOKEN }}@github.com/pnjha/terraform-js"
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
-
