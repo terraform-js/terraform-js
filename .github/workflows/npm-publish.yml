@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - name: setup github user
+      - name: setup github users
         run: |
           git config --global user.email "prakashecdrid@gmail.com"
           git config --global user.name "pnjha"
