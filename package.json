@@ -24,7 +24,7 @@
   "homepage": "https://github.com/pnjha/tf-js#readme",
   "devDependencies": {
     "@types/lodash": "^4.14.185",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.1.4",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
     "eslint": "^8.24.0",
