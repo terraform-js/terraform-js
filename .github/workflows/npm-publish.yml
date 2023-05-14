@@ -9,19 +9,7 @@ on:
       - 'main'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-
   publish-npm:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,6 +22,7 @@ jobs:
           git config --global user.email "prakashecdrid@gmail.com"
           git config --global user.name "pnjha"
       - run: npm ci
+      - run: npm run build
       - run: npm version patch
       - name: commit version
         run: |
@@ -42,5 +31,4 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
-          GIT_USER: ${{secrets.GIT_USER}}
-          GIT_PASS: ${{secrets.GIT_PASS}}
+
