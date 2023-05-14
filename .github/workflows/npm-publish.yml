@@ -34,3 +34,5 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+          GIT_USER: ${{secrets.GIT_USER}}
+          GIT_PASS: ${{secrets.GIT_PASS}}
