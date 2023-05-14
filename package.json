@@ -14,7 +14,8 @@
   },
   "keywords": [
     "Terraform",
-    "Typescript"
+    "Typescript",
+    "IaC"
   ],
   "author": "prakashecdrid@gmail.com",
   "license": "ISC",
