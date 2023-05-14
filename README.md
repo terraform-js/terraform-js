@@ -6,7 +6,7 @@ NPM package link: [terraform-js](https://www.npmjs.com/package/@terraform-js/ter
 Install the package:
 
 ```
-npm i @pnjha/terraform-js
+npm i @terraform-js/terraform-js
 ```
 
 Example:
