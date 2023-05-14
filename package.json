@@ -1,6 +1,6 @@
 {
   "name": "@pnjha/terraform-js",
-  "version": "0.0.12",
+  "version": "0.0.15",
   "description": "A lightweight Javascript wrapper library for Terraform Cli written in Typescript ",
   "main": "build/index.js",
   "type": "module",
@@ -31,7 +31,7 @@
     "typescript": "^4.8.3"
   },
   "dependencies": {
-    "execa": "^6.1.0",
+    "execa": "^7.1.1",
     "lodash": "^4.17.21"
   },
   "types": "build/index.d.ts",
