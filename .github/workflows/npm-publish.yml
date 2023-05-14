@@ -29,8 +29,16 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      - name: setup github username
+        run: |
+          git config --global user.email "prakashecdrid@gmail.com"
+          git config --global user.name "pnjha"
       - run: npm ci
       - run: npm version patch
+      - name: commit version
+        run: |
+          git show
+          git push "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/pnjha/terraform-js"
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
