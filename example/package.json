@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@pnjha/terraform-js": "^0.0.18"
+    "@terraform-js/terraform-js": "^0.0.30"
   }
 }

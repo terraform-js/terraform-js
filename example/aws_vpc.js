@@ -1,4 +1,4 @@
-import { Terraformer } from '@pnjha/terraform-js';
+import { Terraformer } from '@terraform-js/terraform-js';
 
 async function createVPC() {
   const terraform = new Terraformer({});
