@@ -1,6 +1,6 @@
 {
   "name": "@terraform-js/terraform-js",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "A lightweight Javascript wrapper library for Terraform Cli written in Typescript",
   "main": "build/index.js",
   "type": "module",
