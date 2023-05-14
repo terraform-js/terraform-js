@@ -20,6 +20,10 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      - name: setup github username
+        run: |
+          git config --global user.email "prakashecdrid@gmail.com"
+          git config --global user.name "pnjha"
       - run: npm ci
       - run: npm run build
       - run: npm version patch
