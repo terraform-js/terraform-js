@@ -1,7 +1,7 @@
 # terraform-js
 A lightweight Javascript wrapper library for Terraform Cli written in Typescript
 
-NPM package link: https://www.npmjs.com/package/@pnjha/terraform-js
+NPM package link: [terraform-js](https://www.npmjs.com/package/@terraform-js/terraform-js)
 
 Install the package:
 
@@ -12,7 +12,7 @@ npm i @pnjha/terraform-js
 Example:
 
 ```js
-import { Terraformer } from "@pnjha/terraform-js";
+import { Terraformer } from "@terraform-js/terraform-js";
 
 const config = {
   logLevel: 'INFO',         // supported values: TRACE, DEBUG, INFO, WARN or ERROR. Default is INFO
