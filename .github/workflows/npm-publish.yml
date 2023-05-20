@@ -33,7 +33,7 @@ jobs:
           npm version patch
           git show
           git push -u "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js"
-          gh pr create --title "feat: bumpup patch version" --body "feat: bumpup patch version" --reviewer pnjha
+          gh pr create --head origin:version-update --title "feat: bumpup patch version" --body "feat: bumpup patch version" --reviewer pnjha
           gh pr review --approve
           gh pr merge --squash
         env:
