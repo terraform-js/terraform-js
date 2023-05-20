@@ -34,8 +34,7 @@ jobs:
           git show
           git push -u "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js"
           gh pr create --head terraform-js:version-update --title "feat: bumpup patch version" --body "feat: bumpup patch version" --reviewer pnjha
-          gh pr review --approve
-          gh pr merge --squash
+          gh pr merge --squash --delete-branch --admin
         env:
           GH_TOKEN: ${{ secrets.AUTH_TOKEN_GITHUB }}
       - run: npm publish --access=public
