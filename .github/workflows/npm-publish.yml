@@ -33,7 +33,8 @@ jobs:
           git show
           gh pr review --approve
           git push "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js" --force
+        env:
+          GH_TOKEN: ${{ secrets.AUTH_TOKEN_GITHUB }}
       - run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
-          GH_TOKEN: ${{ secrets.AUTH_TOKEN_GITHUB }}
