@@ -28,6 +28,7 @@ jobs:
       - run: npm run build
       - name: commit version
         run: |
+          git pull
           git checkout -b version-update
           npm version patch
           git show
