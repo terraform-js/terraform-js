@@ -30,7 +30,7 @@ jobs:
       - name: commit version
         run: |
           git show
-          git push "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js"
+          git push "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js" --force
       - run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
