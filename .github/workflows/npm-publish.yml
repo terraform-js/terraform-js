@@ -26,10 +26,12 @@ jobs:
           git config --global user.name "pnjha"
       - run: npm ci
       - run: npm run build
-      - run: npm version patch
       - name: commit version
         run: |
+          git checkout -b "version-update"
+          npm version patch
           git show
+          gh pr review --approve
           git push "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js" --force
       - run: npm publish --access=public
         env:
