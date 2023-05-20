@@ -31,9 +31,9 @@ jobs:
           git checkout -b "version-update"
           npm version patch
           git show
+          git push "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js"
           gh pr create --title "feat: bumpup patch version" --body "feat: bumpup patch version" --reviewer pnjha
           gh pr review --approve
-          git push "https://${{ secrets.AUTH_TOKEN_GITHUB }}@github.com/terraform-js/terraform-js" --force
         env:
           GH_TOKEN: ${{ secrets.AUTH_TOKEN_GITHUB }}
       - run: npm publish --access=public
